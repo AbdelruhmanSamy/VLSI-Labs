@@ -14,8 +14,8 @@
       "OpenROAD.DetailedRouting"
     ]
   },
-  "DESIGN_NAME": "simple_adder",
-  "VERILOG_FILES": "dir::src/simple_adder.v",
+  "DESIGN_NAME": "unsigned_multiplier",
+  "VERILOG_FILES": "dir::src/unsigned_multiplier.v",
   "CLOCK_PORT": "clk",
   "CLOCK_PERIOD": 10.0,
   "SYNTH_STRATEGY": "AREA 0"
