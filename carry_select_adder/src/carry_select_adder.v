@@ -1,20 +1,23 @@
 module carry_select_adder #(
-    parameter WIDTH = 8,
-    parameter BLOCK_SIZE = 4
+    parameter integer WIDTH = 8,
+    parameter integer BLOCK_SIZE = 4
 )(
-    input [WIDTH-1:0] a,
-    input [WIDTH-1:0] b,
-    input cin,
-    output [WIDTH-1:0] sum,
-    output cout
+    input wire [WIDTH-1:0] a,
+    input wire [WIDTH-1:0] b,
+    input wire cin,
+    output wire [WIDTH-1:0] sum,
+    output wire cout
 );
+    // Synthesis directive to flatten the design
+    (* synthesis syn_preserve = "true" *)
     wire [WIDTH/BLOCK_SIZE:0] carry_chain;
+    
     assign carry_chain[0] = cin;
     assign cout = carry_chain[WIDTH/BLOCK_SIZE];
 
     genvar i;
     generate
-        for (i = 0; i < WIDTH/BLOCK_SIZE; i = i + 1) begin : block_gen
+        for (i = 0; $unsigned(i) < WIDTH/BLOCK_SIZE; i = i + 1) begin : block_gen
             wire [BLOCK_SIZE-1:0] sum_0, sum_1;
             wire carry_0, carry_1;
 
@@ -45,23 +48,25 @@ module carry_select_adder #(
     endgenerate
 endmodule
 
-// Block Adder for Carry Select Adder
 module block_adder #(
-    parameter WIDTH = 4
+    parameter integer WIDTH = 4
 )(
-    input [WIDTH-1:0] a,
-    input [WIDTH-1:0] b,
-    input cin,
-    output [WIDTH-1:0] sum,
-    output cout
+    input wire [WIDTH-1:0] a,
+    input wire [WIDTH-1:0] b,
+    input wire cin,
+    output wire [WIDTH-1:0] sum,
+    output wire cout
 );
+    // Synthesis directive to flatten the design
+    (* synthesis syn_preserve = "true" *)
     wire [WIDTH:0] carry;
+    
     assign carry[0] = cin;
     assign cout = carry[WIDTH];
 
     genvar j;
     generate
-        for (j = 0; j < WIDTH; j = j + 1) begin : bit_gen
+        for (j = 0; $unsigned(j) < WIDTH; j = j + 1) begin : bit_gen
             assign sum[j] = a[j] ^ b[j] ^ carry[j];
             assign carry[j+1] = (a[j] & b[j]) | (a[j] & carry[j]) | (b[j] & carry[j]);
         end
