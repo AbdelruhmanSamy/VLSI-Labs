@@ -13,13 +13,20 @@ module multiplier_tb();
     wire [2*WIDTH-1:0] product_pipelined;
 
     // Instantiate Multipliers
-    unsigned_multiplier #(.WIDTH(WIDTH)) unsigned_mult (
+    unsigned_multiplier_pnl  unsigned_mult (
         .a(a_unsigned),
         .b(b_unsigned),
         .product(product_unsigned)
     );
 
-    pipelined_multiplier #(.WIDTH(WIDTH), .STAGES(STAGES)) pipelined_mult (
+    unsigned_multiplier_pnl  unsigned_mult2 (
+        .a(a_unsigned),
+        .b(b_unsigned),
+        .product(product_unsigned)
+    );
+
+
+    pipelined_multiplier_nl pipelined_mult (
         .clk(clk),
         .reset(reset),
         .a(a_pipelined),
@@ -27,6 +34,13 @@ module multiplier_tb();
         .product(product_pipelined)
     );
 
+    pipelined_multiplier_pnl pipelined_mult2 (
+        .clk(clk),
+        .reset(reset),
+        .a(a_pipelined),
+        .b(b_pipelined),
+        .product(product_pipelined)
+    );
     // Clock generation
     always #5 clk = ~clk;
 

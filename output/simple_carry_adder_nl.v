@@ -1,4 +1,4 @@
-module simple_carry_adder (cin,
+module simple_carry_adder_nl (cin,
     cout,
     a,
     b,

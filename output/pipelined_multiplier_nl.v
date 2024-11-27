@@ -1,4 +1,4 @@
-module pipelined_multiplier (clk,
+module pipelined_multiplier_nl (clk,
     reset,
     a,
     b,

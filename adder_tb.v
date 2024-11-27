@@ -15,7 +15,7 @@ module adder_tb();
     wire cout_select;
 
     // Instantiate Adders
-    simple_carry_adder #(.WIDTH(WIDTH)) simple_adder (
+    simple_carry_adder_nl  simple_adder (
         .a(a_simple),
         .b(b_simple),
         .cin(cin_simple),
@@ -23,7 +23,23 @@ module adder_tb();
         .cout(cout_simple)
     );
 
-    carry_select_adder #(.WIDTH(WIDTH)) select_adder (
+    simple_carry_adder_pnl  simple_adder2 (
+        .a(a_simple),
+        .b(b_simple),
+        .cin(cin_simple),
+        .sum(sum_simple),
+        .cout(cout_simple)
+    );
+
+    carry_select_adder_nl  select_adder (
+        .a(a_select),
+        .b(b_select),
+        .cin(cin_select),
+        .sum(sum_select),
+        .cout(cout_select)
+    );
+
+    carry_select_adder_pnl  select_adder2 (
         .a(a_select),
         .b(b_select),
         .cin(cin_select),

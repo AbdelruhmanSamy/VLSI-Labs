@@ -1,4 +1,4 @@
-module unsigned_multiplier (VPWR,
+module unsigned_multiplier_pnl (VPWR,
     VGND,
     a,
     b,

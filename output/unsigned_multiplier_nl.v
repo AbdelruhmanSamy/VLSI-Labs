@@ -1,4 +1,4 @@
-module unsigned_multiplier (a,
+module unsigned_multiplier_nl (a,
     b,
     product);
  input [7:0] a;

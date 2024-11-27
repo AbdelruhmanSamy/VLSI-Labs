@@ -1,4 +1,4 @@
-module carry_select_adder (cin,
+module carry_select_adder_nl (cin,
     cout,
     a,
     b,
