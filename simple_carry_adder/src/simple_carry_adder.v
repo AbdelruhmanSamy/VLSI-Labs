@@ -7,7 +7,7 @@ module simple_carry_adder #(
     output [WIDTH-1:0] sum,
     output cout
 );
-    // Explicit full adder generation for better synthesis
+    // Use generate block for better synthesizability
     wire [WIDTH:0] carry;
     assign carry[0] = cin;
     assign cout = carry[WIDTH];
@@ -15,25 +15,8 @@ module simple_carry_adder #(
     genvar i;
     generate
         for (i = 0; i < WIDTH; i = i + 1) begin : gen_adder
-            full_adder fa (
-                .a(a[i]),
-                .b(b[i]),
-                .cin(carry[i]),
-                .sum(sum[i]),
-                .cout(carry[i+1])
-            );
+            assign sum[i] = a[i] ^ b[i] ^ carry[i];
+            assign carry[i+1] = (a[i] & b[i]) | (a[i] & carry[i]) | (b[i] & carry[i]);
         end
     endgenerate
-
-    // Full adder module definition
-    module full_adder(
-        input a,
-        input b,
-        input cin,
-        output sum,
-        output cout
-    );
-        assign sum = a ^ b ^ cin;
-        assign cout = (a & b) | (cin & (a ^ b));
-    endmodule
 endmodule
