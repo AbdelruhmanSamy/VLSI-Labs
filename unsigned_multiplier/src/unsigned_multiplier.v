@@ -3,18 +3,24 @@ module unsigned_multiplier #(
 )(
     input [WIDTH-1:0] a,
     input [WIDTH-1:0] b,
-    output [2*WIDTH-1:0] product
+    output reg [2*WIDTH-1:0] product
 );
-    reg [2*WIDTH-1:0] temp_product;
-    integer i;
+    wire [2*WIDTH-1:0] partial_products[WIDTH-1:0];
+    genvar i;
 
+    // Generate partial products
+    generate
+        for (i = 0; i < WIDTH; i = i + 1) begin : gen_partial_products
+            assign partial_products[i] = b[i] ? (a << i) : {2*WIDTH{1'b0}};
+        end
+    endgenerate
+
+    // Summing up the partial products
+    integer j;
     always @(*) begin
-        temp_product = {(2*WIDTH){1'b0}};
-        for (i = 0; i < WIDTH; i = i + 1) begin
-            if (b[i])
-                temp_product = temp_product + ({WIDTH{1'b0}, a} << i);
+        product = {2*WIDTH{1'b0}};
+        for (j = 0; j < WIDTH; j = j + 1) begin
+            product = product + partial_products[j];
         end
     end
-
-    assign product = temp_product;
 endmodule
