@@ -8,8 +8,6 @@ module carry_select_adder #(
     output wire [WIDTH-1:0] sum,
     output wire cout
 );
-    // Synthesis directive to flatten the design
-    (* synthesis syn_preserve = "true" *)
     wire [WIDTH/BLOCK_SIZE:0] carry_chain;
     
     assign carry_chain[0] = cin;
@@ -17,7 +15,7 @@ module carry_select_adder #(
 
     genvar i;
     generate
-        for (i = 0; $unsigned(i) < WIDTH/BLOCK_SIZE; i = i + 1) begin : block_gen
+        for (i = 0; i < WIDTH/BLOCK_SIZE; i = i + 1) begin : block_gen
             wire [BLOCK_SIZE-1:0] sum_0, sum_1;
             wire carry_0, carry_1;
 
@@ -57,8 +55,6 @@ module block_adder #(
     output wire [WIDTH-1:0] sum,
     output wire cout
 );
-    // Synthesis directive to flatten the design
-    (* synthesis syn_preserve = "true" *)
     wire [WIDTH:0] carry;
     
     assign carry[0] = cin;
@@ -66,7 +62,7 @@ module block_adder #(
 
     genvar j;
     generate
-        for (j = 0; $unsigned(j) < WIDTH; j = j + 1) begin : bit_gen
+        for (j = 0; j < WIDTH; j = j + 1) begin : bit_gen
             assign sum[j] = a[j] ^ b[j] ^ carry[j];
             assign carry[j+1] = (a[j] & b[j]) | (a[j] & carry[j]) | (b[j] & carry[j]);
         end
